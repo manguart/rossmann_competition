@@ -1,6 +1,9 @@
 """
-Train LightGBM thar predicts Rossmann Sales, do exploratory
+Train LightGBM thar predicts "Rossmann" Sales, do exploratory
 and post model analysis
+
+More info about this competition:
+https://www.kaggle.com/c/rossmann-store-sales
 """
 import pandas as pd
 import datetime as dt
@@ -139,7 +142,6 @@ def fill_nas(df, val=-1):
     if 'payment_delayed_time' in df.columns:
         df_filled['payment_delayed_time'] = df['payment_delayed_time']
     return df_filled
-
 
 
 def time_analysis(df):
@@ -291,6 +293,7 @@ def train(df):
     calibration(x_partial_dependence)
     store_daily_calibration(x_partial_dependence)
 
+
 def calibration(x_partial_dependence):
     """
     Calibration plot
@@ -322,7 +325,6 @@ def calibration(x_partial_dependence):
     pdf_info.close()
 
 
-
 def store_daily_calibration(x_partial_dependence):
     """
     Get model's monthly calibration
@@ -347,11 +349,6 @@ def store_daily_calibration(x_partial_dependence):
         pdf.savefig()
         plt.close()
     pdf.close()
-
-
-
-
-
 
 
 def monthly_calibration(x_partial_dependence):
@@ -391,7 +388,6 @@ def monthly_calibration(x_partial_dependence):
     pdf.savefig()
     plt.close()
     pdf.close()
-
 
 
 def clean_data(name, is_test):
@@ -472,6 +468,7 @@ def main():
     bivariate(df)
     train(df)
     test()
+
 
 if __name__ == "__main__":
     main()
