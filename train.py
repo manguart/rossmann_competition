@@ -9,11 +9,9 @@ matplotlib.use('Agg')
 from matplotlib.backends.backend_pdf import PdfPages
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
-import xgboost as xgb
 import multiprocessing
 import shap
 import cPickle as pickle
-from sklearn.model_selection import GridSearchCV
 import numpy as np
 import yaml
 import lightgbm as lgb
@@ -225,12 +223,12 @@ def train(df):
     y_test = test[target]
     eval_set = [(x_train, y_train),
                 (x_test, y_test)]
-    model = lgb.LGBMRegressor(n_estimators=500000,
-                              max_depth=5,
-                              learning_rate=0.05,
+    model = lgb.LGBMRegressor(n_estimators=n_estimators,
+                              max_depth=max_depth,
+                              learning_rate=learning_rate,
                               seed=seed,
                               nthread=multiprocessing.cpu_count(),
-                              subsample=0.7,
+                              subsample=subsample,
                               objective="rmse")
 
     model.fit(x_train, y_train,
@@ -466,9 +464,6 @@ def test():
         pdf.savefig()
         plt.close()
     pdf.close()
-
-
-
 
 
 def main():
